@@ -79,7 +79,7 @@ mybatis-plus:
 swagger:
   title: Smart Swagger API
   description: Spring Cloud微服务开发脚手架
-  version: @project.version@
+  version: 1.0.0
 #  license: Powered By Smartsoft
 #  licenseUrl: https://smartsoft.com/
 #  terms-of-service-url: https://smartsoft.com/
