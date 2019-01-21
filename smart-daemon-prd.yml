@@ -1,0 +1,52 @@
+## spring security 配置
+security:
+  oauth2:
+    client:
+      client-id: ENC(z3eZkekNAXSc5sdF1GLXWQ==)
+      client-secret: ENC(z3eZkekNAXSc5sdF1GLXWQ==)
+      scope: server
+## 定时任务
+spring:
+  # 保存定时任务的数据源
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://smart-mysql:3306/smart?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+  elasticjob:
+    # 分布式任务协调依赖zookeeper
+    zookeeper:
+      server-lists: smart-zookeeper:2181
+      namespace: smart-daemon
+    # 普通任务
+    simples:
+      spring-simple-job:
+        job-class: com.smart4cloud.smart.daemon.job.SmartSimpleJob
+        cron: 0 0 0/1 * * ?
+        sharding-total-count: 3
+        sharding-item-parameters: 0=service1,1=service2,2=service3
+        eventTraceRdbDataSource: 'dataSource'
+        listener:
+          listener-class: com.smart4cloud.smart.daemon.listener.SmartElasticJobListener
+      spring-simple-job2:
+        job-class: com.smart4cloud.smart.daemon.job.SmartSimpleJob2
+        cron: 0 0 0/1 * * ?
+        sharding-total-count: 3
+        sharding-item-parameters: 0=service1,1=service2,2=service3
+        eventTraceRdbDataSource: 'dataSource'
+        listener:
+          listener-class: com.smart4cloud.smart.daemon.listener.SmartElasticJobListener
+    # 简单任务
+    dataflows:
+      spring-dataflow-job:
+        job-class: com.smart4cloud.smart.daemon.job.SmartDataflowJob
+        cron: 0 0 0/1 * * ?
+        sharding-total-count: 3
+        sharding-item-parameters: 0=service1,1=service2,2=service3
+        streaming-process: true
+        eventTraceRdbDataSource: 'dataSource'
+        listener:
+          distributed-listener-class: com.smart4cloud.smart.daemon.listener.SmartDistributeElasticJobListener
+          started-timeout-milliseconds: 5000
+          completed-timeout-milliseconds: 10000

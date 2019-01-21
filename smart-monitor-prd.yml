@@ -1,0 +1,13 @@
+spring:
+  # 安全配置
+  security:
+    user:
+      name: ENC(z3eZkekNAXSc5sdF1GLXWQ==)     # smart
+      password: ENC(z3eZkekNAXSc5sdF1GLXWQ==) # smart
+  boot:
+    admin:
+      ui:
+        resource-locations: 'classpath:/ui/,classpath:/static/'
+        template-location: 'classpath:/ui/'
+        title: 'smart 服务状态监控'
+        brand: 'smart 服务状态监控'
